@@ -1,0 +1,15 @@
+.env
+# --- PYTHON Y DJANGO (Archivos basura) ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# --- BASE DE DATOS LOCAL ---
+db.sqlite3
+# --- ENTORNO VIRTUAL ---
+# Nunca se sube la carpeta con las librerías, pesa mucho y es innecesaria
+venv/
+# --- IDE Y SISTEMA OPERATIVO ---
+# Archivos de configuración de tu editor (VS Code, etc) o de Windows
+.vscode/
+

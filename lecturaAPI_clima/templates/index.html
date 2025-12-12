@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador Clima</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-cloud-haze2-fill"></i> WeatherApp</a>
+            <div class="ms-auto">
+                <a href="{% url 'lista_guardados' %}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-archive-fill"></i> Ver Mis Registros Guardados
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container col-lg-6">
+        
+        <div class="card main-card mb-4">
+            <div class="card-body p-4">
+                <form method="POST" class="input-group input-group-lg">
+                    {% csrf_token %}
+                    <input type="text" name="localidad" class="form-control" placeholder="Ciudad..." required>
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if result %}
+        <div class="card main-card border-primary">
+            <div class="weather-gradient text-center p-4">
+                <h2>{{ result.localidad }}</h2>
+                <div class="display-1 fw-bold">{{ result.temp_max }}°</div>
+                <p>Máxima de hoy</p>
+            </div>
+            
+            <div class="card-body text-center">
+                <div class="row mb-4">
+                    <div class="col">Min: <strong>{{ result.temp_min }}°</strong></div>
+                    <div class="col">Lluvia: <strong>{{ result.lluvia }}%</strong></div>
+                </div>
+
+                <form action="{% url 'guardar_clima' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="localidad" value="{{ result.localidad }}">
+                    <input type="hidden" name="latitud" value="{{ result.latitud }}">
+                    <input type="hidden" name="longitud" value="{{ result.longitud }}">
+                    <input type="hidden" name="temp_max" value="{{ result.temp_max }}">
+                    <input type="hidden" name="temp_min" value="{{ result.temp_min }}">
+                    <input type="hidden" name="lluvia" value="{{ result.lluvia }}">
+                    
+                    <button type="submit" class="btn btn-success w-100 btn-lg shadow">
+                        <i class="bi bi-save-fill"></i> Guardar en Historial
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>

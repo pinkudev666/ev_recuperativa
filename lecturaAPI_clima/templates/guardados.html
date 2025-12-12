@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Registros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark mb-5 shadow">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">WeatherApp</a>
+            <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm">Volver al Buscador</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4"><i class="bi bi-database-check text-success"></i> Registros Guardados</h2>
+        
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Ciudad</th>
+                            <th>Max</th>
+                            <th>Min</th>
+                            <th>Lluvia</th>
+                            <th>Fecha Guardado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in history %}
+                        <tr>
+                            <td class="ps-4 fw-bold">{{ item.localidad }}</td>
+                            <td>{{ item.temp_max }}°C</td>
+                            <td>{{ item.temp_min }}°C</td>
+                            <td>{{ item.lluvia }}%</td>
+                            <td class="text-muted small">{{ item.fecha_consulta|date:"d/m/Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                No tienes nada guardado aún. Ve al buscador y guarda algo.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
