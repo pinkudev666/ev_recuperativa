@@ -4,8 +4,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-# --- BASE DE DATOS LOCAL ---
-db.sqlite3
+
 # --- ENTORNO VIRTUAL ---
 # Nunca se sube la carpeta con las librerías, pesa mucho y es innecesaria
 venv/
